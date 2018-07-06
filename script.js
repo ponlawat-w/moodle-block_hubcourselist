@@ -115,8 +115,8 @@ require(['jquery'], function ($) {
             load: function() {
                 $spinner.show();
                 $status.html(M.str.block_hubcourselist.loading);
-                $table.find('thead th').removeClass('sorted').find('i').remove();
-                $table.find('thead th[data-sortby="' + querydataservice.sortby + '"]').addClass('sorted')
+                $table.find('thead th').removeClass('bg-primary').find('i').remove();
+                $table.find('thead th[data-sortby="' + querydataservice.sortby + '"]').addClass('bg-primary')
                     .append(' ')
                     .append($('<i>').addClass(querydataservice.asc ? 'fa fa-arrow-down' : 'fa fa-arrow-up'));
 

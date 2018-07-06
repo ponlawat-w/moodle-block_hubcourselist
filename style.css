@@ -20,10 +20,6 @@ table.hubcourselist thead th:hover {
     background-color: #ededed;
 }
 
-table.hubcourselist th.sorted {
-    background-color: #ccdcff;
-}
-
 table.hubcourselist tbody tr:hover {
     cursor: pointer;
     background-color: #ededed;
