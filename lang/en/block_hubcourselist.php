@@ -4,6 +4,8 @@ $string['pluginname'] = 'Hub Course List';
 $string['hubcourselist:addinstance'] = 'Create a new instance';
 $string['hubcourselist:myaddinstance'] = 'Create a new instance in my page';
 
+$string['allsubjects'] = 'All subjects';
+
 $string['moodleversion'] = 'Moodle';
 $string['author'] = 'Author';
 

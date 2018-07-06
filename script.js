@@ -1,18 +1,12 @@
 require(['jquery'], function ($) {
     $(document).ready(function() {
-        // var block_hubcourselist_frontpage = false;
-        // function block_hubcourselist_setfrontpage() {
-        //     console.log('eiei');
-        // }
 
         var $body = $('body');
         var isfrontpage = $body.hasClass('pagelayout-frontpage');
         if (isfrontpage) {
             var $wholecontent = $('aside[data-block="hubcourselist"]');
-            // var $title = $wholecontent.parent('.content').siblings('h3');
             var $target = $('section#region-main .card.card-block').find('div[role="main"]');
             $target.prepend($wholecontent);
-            // $wholecontent.insertAfter($title);
             var otherblocks = $('aside.block[data-block!="hubcourselist"]').length;
             if (!otherblocks) {
                 $('section#region-main').removeClass('has-blocks');
@@ -20,6 +14,7 @@ require(['jquery'], function ($) {
         }
         var $spinner = $('#block_hubcourselist_spinner');
         var $amountselect = $('#block_hubcourselist_amountselect');
+        var $subjectselect = $('#block_hubcourselist_subjectselect');
         var $keywordinput = $('#block_hubcourselist_keywordinput');
         var $clearkeywordbtn = $('#block_hubcourselist_clearkeywordbtn');
         var $clearkeywordbtn_prototype = $clearkeywordbtn.clone();
@@ -89,6 +84,7 @@ require(['jquery'], function ($) {
             asc: false,
             create: function() {
                 var querydata = {
+                    subject: $subjectselect.val(),
                     keyword: encodeURI($keywordinput.val().trim()),
                     maxresult: $amountselect.val(),
                     sortby: this.sortby ? this.sortby : 'timecreated',
@@ -206,6 +202,10 @@ require(['jquery'], function ($) {
 
         $amountselect.change(function() {
             pagination.current = 1;
+            apiservice.load();
+        });
+
+        $subjectselect.change(function() {
             apiservice.load();
         });
 

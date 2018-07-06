@@ -5,7 +5,7 @@ class block_hubcourselist extends block_base
 {
     public function init() {
         $this->title = get_string('pluginname', 'block_hubcourselist');
-        $this->version = 2018062800;
+        $this->version = 2018070600;
     }
 
     public function has_config() {

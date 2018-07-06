@@ -14,6 +14,20 @@ function block_hubcourselist_render_amountselect($set = [5, 10, 25, 50, 100]) {
     return $html;
 }
 
+function block_hubcourselist_render_subjectselect() {
+    global $DB;
+    $subjects = $DB->get_records('block_hubcourse_subjects', [], 'name ASC');
+
+    $html = html_writer::start_tag('select', ['id' => 'block_hubcourselist_subjectselect', 'class' => 'form-control']);
+    $html .= html_writer::tag('option', get_string('allsubjects', 'block_hubcourselist'), ['value' => 0]);
+    foreach ($subjects as $subject) {
+        $html .= html_writer::tag('option', $subject->name, ['value' => $subject->id]);
+    }
+    $html .= html_writer::end_tag('select');
+
+    return $html;
+}
+
 function block_hubcourselist_render_keywordinput() {
     $html = html_writer::start_div('input-group');
     $html .= html_writer::span(html_writer::tag('i', '', ['class' => 'fa fa-search']), 'input-group-addon');
@@ -64,8 +78,9 @@ function block_hubcourselist_render() {
     $html = html_writer::start_div('', ['id' => 'block_hubcourselist']);
 
     $html .= html_writer::start_div('row');
-    $html .= html_writer::div(block_hubcourselist_render_amountselect(), 'col-md-4');
-    $html .= html_writer::div(block_hubcourselist_render_keywordinput(), 'col-md-8');
+    $html .= html_writer::div(block_hubcourselist_render_amountselect(), 'col-lg-4');
+    $html .= html_writer::div(block_hubcourselist_render_subjectselect(), 'col-lg-3 col-md-5');
+    $html .= html_writer::div(block_hubcourselist_render_keywordinput(), 'col-lg-5 col-md-7');
     $html .= html_writer::end_div();
 
     $html .= html_writer::start_div('table-container');

@@ -1,7 +1,7 @@
 <?php
 $plugin->component = 'block_hubcourselist';
-$plugin->version = 2018062800;
+$plugin->version = 2018070600;
 $plugin->requires = 2017111302;
 $plugin->dependencies = array(
-    'block_hubcourseinfo' => 2018062800
+    'block_hubcourseinfo' => 2018070500
 );

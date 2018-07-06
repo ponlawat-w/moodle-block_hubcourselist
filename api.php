@@ -6,6 +6,7 @@ require_once(__DIR__ . '/lib.php');
 ob_clean();
 header('Content-Type: application/json');
 
+$subject = optional_param('subject', 0, PARAM_INT);
 $keyword = optional_param('keyword', '', PARAM_TEXT);
 $maxresult = optional_param('maxresult', 10, PARAM_INT);
 $sortby = optional_param('sortby', 'timecreated', PARAM_TEXT);
@@ -47,9 +48,9 @@ $sql_select = '
 
 $sql_from_join = '
       FROM {course}
-      JOIN {block_hubcourses} ON {course}.id = {block_hubcourses}.courseid
-      JOIN {user} ON {block_hubcourses}.userid = {user}.id
-      LEFT JOIN {block_hubcourse_versions} ON {block_hubcourses}.stableversion = {block_hubcourse_versions}.id
+          JOIN {block_hubcourses} ON {course}.id = {block_hubcourses}.courseid
+          JOIN {user} ON {block_hubcourses}.userid = {user}.id
+          LEFT JOIN {block_hubcourse_versions} ON {block_hubcourses}.stableversion = {block_hubcourse_versions}.id
 ';
 
 $sql_condition = '';
@@ -58,15 +59,16 @@ if (trim($keyword) != '') {
     $keyword = strtolower($keyword);
 
     $sql_condition = '
-        WHERE LOWER({course}.fullname) LIKE ?
+        WHERE (LOWER({course}.fullname) LIKE ?
             OR LOWER({course}.shortname) LIKE ?
             OR LOWER({user}.firstname) LIKE ?
             OR LOWER({user}.lastname) LIKE ?
             OR LOWER({course}.summary) LIKE ?
+            OR LOWER({block_hubcourses}.tags) LIKE ?
             OR LOWER({block_hubcourses}.description) LIKE ?
             OR LOWER({block_hubcourse_versions}.description) LIKE ?
             OR LOWER({block_hubcourse_versions}.moodlerelease) LIKE ?
-            OR LOWER({block_hubcourse_versions}.moodleversion) LIKE ?
+            OR LOWER({block_hubcourse_versions}.moodleversion) LIKE ?)
     ';
 
     $params[] .= "%{$keyword}%";
@@ -78,6 +80,16 @@ if (trim($keyword) != '') {
     $params[] .= "%{$keyword}%";
     $params[] .= "%{$keyword}%";
     $params[] .= "%{$keyword}%";
+    $params[] .= "%{$keyword}%";
+}
+
+if ($subject) {
+    if ($sql_condition) {
+        $sql_condition .= ' AND ({block_hubcourses}.subject = ?)';
+    } else {
+        $sql_condition = ' WHERE ({block_hubcourses}.subject = ?)';
+    }
+    $params[] = $subject;
 }
 
 $sql_orderby = " ORDER BY {$sortby} {$sorttype}";
