@@ -125,6 +125,17 @@ require(['jquery'], function ($) {
                         pagination.set(response.currentpage > 0 ? response.currentpage : 1);
                         table.update();
                         $status.html(response.status);
+
+                        if (apiservice.courses.length > 0) {
+                            $status.removeClass('no-result');
+                            $table.show();
+                            $pagination.show();
+                        } else {
+                            $status.addClass('no-result');
+                            $table.hide();
+                            $pagination.hide();
+                        }
+
                         $spinner.hide();
                     },
                     error: function (response) {

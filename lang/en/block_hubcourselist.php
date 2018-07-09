@@ -11,7 +11,7 @@ $string['author'] = 'Author';
 
 $string['amountselect_prepend'] = 'Show ';
 $string['amountselect_append'] = ' entries';
-$string['search'] = 'Search courses';
+$string['search'] = 'Search by course name or tag…';
 
 $string['loading'] = 'Loading…';
 
