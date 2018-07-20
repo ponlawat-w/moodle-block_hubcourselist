@@ -31,7 +31,7 @@ function block_hubcourselist_render_subjectselect() {
 function block_hubcourselist_render_keywordinput() {
     $html = html_writer::start_div('input-group');
     $html .= html_writer::span(html_writer::tag('i', '', ['class' => 'fa fa-search']), 'input-group-addon');
-    $html .= html_writer::start_tag('input', ['id' => 'block_hubcourselist_keywordinput', 'class' => 'form-control', 'placeholder' => get_string('search', 'block_hubcourselist')]);
+    $html .= html_writer::start_tag('input', ['type' => 'text', 'id' => 'block_hubcourselist_keywordinput', 'class' => 'form-control', 'placeholder' => get_string('search', 'block_hubcourselist')]);
     $html .= html_writer::div(
             html_writer::tag('button', html_writer::tag('i', '', ['class' => 'fa fa-times']), ['class' => 'btn btn-default', 'title' => get_string('clear')])
         , 'input-group-btn', ['id' => 'block_hubcourselist_clearkeywordbtn']);
@@ -77,10 +77,10 @@ function block_hubcourselist_render() {
 
     $html = html_writer::start_div('', ['id' => 'block_hubcourselist']);
 
-    $html .= html_writer::start_div('row');
-    $html .= html_writer::div(block_hubcourselist_render_amountselect(), 'col-lg-4');
-    $html .= html_writer::div(block_hubcourselist_render_subjectselect(), 'col-lg-3 col-md-5');
-    $html .= html_writer::div(block_hubcourselist_render_keywordinput(), 'col-lg-5 col-md-7');
+    $html .= html_writer::start_div('row', ['id' => 'block_hubcourselist_keywords']);
+    $html .= html_writer::div(block_hubcourselist_render_amountselect(), 'col-lg-4', ['id' => 'block_hubcourselist_amountselect_container']);
+    $html .= html_writer::div(block_hubcourselist_render_subjectselect(), 'col-lg-3 col-md-5', ['id' => 'block_hubcourselist_subjectselect_container']);
+    $html .= html_writer::div(block_hubcourselist_render_keywordinput(), 'col-lg-5 col-md-7', ['id' => 'block_hubcourselist_keywordinput_container']);
     $html .= html_writer::end_div();
 
     $html .= html_writer::start_div('table-container');
@@ -91,7 +91,7 @@ function block_hubcourselist_render() {
     $html .= html_writer::end_div();
     $html .= html_writer::end_div();
 
-    $html .= html_writer::start_div('row');
+    $html .= html_writer::start_div('row', ['id' => 'block_hubcourelist_statusbar']);
     $html .= html_writer::div('', 'col-sm-6 col-md-4', ['id' => 'block_hubcourselist_status']);
     $html .= html_writer::div(block_hubcourselist_render_pagination(), 'col-sm-6 col-md-8', ['style' => 'text-align: center;']);
 

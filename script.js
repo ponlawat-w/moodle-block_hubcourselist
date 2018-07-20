@@ -1,26 +1,39 @@
 require(['jquery'], function ($) {
     $(document).ready(function() {
+        var boost = M.cfg.theme === 'boost';
 
         var $body = $('body');
         var isfrontpage = $body.hasClass('pagelayout-frontpage');
         if (isfrontpage) {
-            var $wholecontent = $('aside[data-block="hubcourselist"]');
-            var $target = $('section#region-main .card.card-block').find('div[role="main"]');
+            var $wholecontent = boost ? $('aside[data-block="hubcourselist"]') : $('div.block.block_hubcourselist');
+            console.log($wholecontent);
+            var $target = boost ? $('section#region-main .card.card-block').find('div[role="main"]') : $('div[role="main"]');
             $target.prepend($wholecontent);
             var otherblocks = $('aside.block[data-block!="hubcourselist"]').length;
             if (!otherblocks) {
                 $('section#region-main').removeClass('has-blocks');
             }
         }
+
         var $spinner = $('#block_hubcourselist_spinner');
         var $amountselect = $('#block_hubcourselist_amountselect');
         var $subjectselect = $('#block_hubcourselist_subjectselect');
         var $keywordinput = $('#block_hubcourselist_keywordinput');
         var $clearkeywordbtn = $('#block_hubcourselist_clearkeywordbtn');
-        var $clearkeywordbtn_prototype = $clearkeywordbtn.clone();
         var $table = $('#block_hubcourselist_table');
         var $status = $('#block_hubcourselist_status');
         var $pagination = $('#block_hubcourselist_pagination');
+
+        if (!boost) {
+            $('#block_hubcourselist_keywords').removeClass('row');
+            $('#block_hubcourelist_statusbar').removeClass('row');
+            $('#block_hubcourselist_amountselect_container').addClass('hcl-inline');
+            $('#block_hubcourselist_subjectselect_container').addClass('hcl-inline');
+            $('#block_hubcourselist_keywordinput_container').addClass('hcl-inline');
+            $status.removeClass('row');
+        }
+
+        var $clearkeywordbtn_prototype = $clearkeywordbtn.clone();
 
         var pagination = {
             max: 1,
@@ -138,7 +151,7 @@ require(['jquery'], function ($) {
 
                         $spinner.hide();
                     },
-                    error: function (response) {
+                    error: function () {
                         $spinner.hide();
                     }
                 })

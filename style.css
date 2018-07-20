@@ -2,6 +2,11 @@
     margin: 20px 10px;
 }
 
+.hcl-inline {
+    display: inline-block;
+    margin-left: 10px;
+}
+
 .table-container {
     position: relative;
 }
