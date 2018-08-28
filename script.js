@@ -1,5 +1,28 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Javascript file of block_hubcourselist
+ *
+ * @package block_hubcourselist
+ * @copyright 2018 Moodle Association of Japan
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 require(['jquery'], function ($) {
-    $(document).ready(function() {
+    $(document).ready(function () {
         var boost = M.cfg.theme === 'boost';
 
         var $body = $('body');
@@ -35,47 +58,50 @@ require(['jquery'], function ($) {
 
         var $clearkeywordbtn_prototype = $clearkeywordbtn.clone();
 
+        /**
+         * Pagination handler
+         */
         var pagination = {
             max: 1,
             current: 1,
-            setmax: function(newmax) {
+            setmax: function (newmax) {
                 this.max = newmax;
                 if (newmax > 0) {
                     this.current = 1;
                 }
                 this.update();
             },
-            next: function() {
+            next: function () {
                 if (this.current < this.max) {
                     this.current++;
                     this.updateactive();
                 }
             },
-            previous: function() {
+            previous: function () {
                 if (this.current > 1) {
                     this.current--;
                     this.updateactive();
                 }
             },
-            first: function() {
+            first: function () {
                 if (this.max > 0) {
                     this.current = 1;
                     this.updateactive();
                 }
             },
-            last: function() {
+            last: function () {
                 if (this.max > 0) {
                     this.current = this.max;
                     this.updateactive();
                 }
             },
-            set: function(page) {
+            set: function (page) {
                 if (page > 0 && page <= this.max) {
                     this.current = page;
                     this.updateactive();
                 }
             },
-            update: function() {
+            update: function () {
                 $pagination.find('.page-number').remove();
 
                 for (var page = 1; page <= this.max; page++) {
@@ -86,16 +112,19 @@ require(['jquery'], function ($) {
 
                 this.updateactive();
             },
-            updateactive: function() {
+            updateactive: function () {
                 $pagination.find('.page-item').removeClass('active');
                 $pagination.find('.page-number[apiservice-page="' + this.current + '"]').addClass('active');
             }
         };
 
+        /**
+         * Query generator
+         */
         var querydataservice = {
             sortby: 'timecreated',
             asc: false,
-            create: function() {
+            create: function () {
                 var querydata = {
                     subject: $subjectselect.val(),
                     keyword: encodeURI($keywordinput.val().trim()),
@@ -118,10 +147,13 @@ require(['jquery'], function ($) {
             }
         };
 
+        /**
+         * API Caller
+         */
         var apiservice = {
             courses: [],
             records: 0,
-            load: function() {
+            load: function () {
                 $spinner.show();
                 $status.html(M.str.block_hubcourselist.loading);
                 $table.find('thead th').removeClass('bg-primary').find('i').remove();
@@ -158,15 +190,18 @@ require(['jquery'], function ($) {
             }
         };
 
+        /**
+         * Table renderer
+         */
         var table = {
-            createcell: function(text, url) {
+            createcell: function (text, url) {
                 return $('<td>').html(
                     $('<a>').attr('href', url).html(text)
-                ).attr('data-url', url).click(function() {
+                ).attr('data-url', url).click(function () {
                     window.location = $(this).attr('data-url');
                 });
             },
-            shortenversion: function(release) {
+            shortenversion: function (release) {
                 if (!release) {
                     return '';
                 }
@@ -177,7 +212,7 @@ require(['jquery'], function ($) {
 
                 return extracted.length < 2 ? extracted[0] : extracted[0] + '.' + extracted[1].split(' ')[0];
             },
-            update: function() {
+            update: function () {
                 $table.find('tbody tr').remove();
 
                 for (var ci = 0; ci < apiservice.courses.length; ci++) {
@@ -200,12 +235,15 @@ require(['jquery'], function ($) {
         };
 
         var keywordinputinterval = null;
+        /**
+         * Keyword input handler
+         */
         var keyword = {
-            apply: function() {
+            apply: function () {
                 pagination.current = 1;
 
                 if ($keywordinput.val() !== '' && !$keywordinput.siblings('#block_hubcourselist_clearkeywordbtn').length) {
-                    $clearkeywordbtn_prototype.clone().insertAfter($keywordinput).click(function() {
+                    $clearkeywordbtn_prototype.clone().insertAfter($keywordinput).click(function () {
                         pagination.current = 1;
                         $keywordinput.val('');
                         apiservice.load();
@@ -216,26 +254,28 @@ require(['jquery'], function ($) {
                 }
 
                 clearTimeout(keywordinputinterval);
-                keywordinputinterval = setTimeout(function() {
+                keywordinputinterval = setTimeout(function () {
                     apiservice.load();
                 }, 500);
             }
         };
 
+        // Event handlers
+
         $clearkeywordbtn.remove();
 
-        $amountselect.change(function() {
+        $amountselect.change(function () {
             pagination.current = 1;
             apiservice.load();
         });
 
-        $subjectselect.change(function() {
+        $subjectselect.change(function () {
             apiservice.load();
         });
 
         $keywordinput.bind('input', keyword.apply);
 
-        $table.find('thead th').click(function() {
+        $table.find('thead th').click(function () {
             if (querydataservice.sortby !== $(this).attr('data-sortby')) {
                 querydataservice.asc = true;
                 querydataservice.sortby = $(this).attr('data-sortby');
@@ -245,27 +285,28 @@ require(['jquery'], function ($) {
             apiservice.load();
         });
 
-        $body.on('click', '.page-first a', function() {
-           pagination.first();
-           apiservice.load();
+        $body.on('click', '.page-first a', function () {
+            pagination.first();
+            apiservice.load();
         });
-        $body.on('click', '.page-previous a', function() {
-           pagination.previous();
-           apiservice.load();
+        $body.on('click', '.page-previous a', function () {
+            pagination.previous();
+            apiservice.load();
         });
-        $body.on('click', '.page-next a', function() {
-           pagination.next();
-           apiservice.load();
+        $body.on('click', '.page-next a', function () {
+            pagination.next();
+            apiservice.load();
         });
-        $body.on('click', '.page-last a', function() {
-           pagination.last();
-           apiservice.load();
+        $body.on('click', '.page-last a', function () {
+            pagination.last();
+            apiservice.load();
         });
-        $body.on('click', '.page-number a', function() {
+        $body.on('click', '.page-number a', function () {
             pagination.set($(this).parent('.page-number').attr('apiservice-page'));
             apiservice.load();
         });
 
+        // Page initial functions call
         apiservice.load();
     });
 });

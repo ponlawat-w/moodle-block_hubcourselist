@@ -1,3 +1,7 @@
+/**
+ * Block styles
+ */
+
 #block_hubcourselist_status.no-result {
     margin: 20px 10px;
 }
@@ -61,5 +65,7 @@ table.hubcourselist tbody td a {
 }
 
 @keyframes hubcourselist-loader {
-    to {transform: rotate(360deg);}
+    to {
+        transform: rotate(360deg);
+    }
 }

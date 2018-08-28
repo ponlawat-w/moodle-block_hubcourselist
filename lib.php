@@ -1,5 +1,33 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Block functions libraries
+ *
+ * @package block_hubcourselist
+ * @copyright 2018 Moodle Association of Japan
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
+ * Return rendered dropdown HTML string of given numbers
+ * @param int[] $set
+ * @return string
+ * @throws coding_exception
+ */
 function block_hubcourselist_render_amountselect($set = [5, 10, 25, 50, 100]) {
     $html = html_writer::start_div('input-group');
     $html .= html_writer::span(get_string('amountselect_prepend', 'block_hubcourselist'), 'input-group-addon');
@@ -14,6 +42,12 @@ function block_hubcourselist_render_amountselect($set = [5, 10, 25, 50, 100]) {
     return $html;
 }
 
+/**
+ * Return rendered dropdown HTML string of subjects
+ * @return string
+ * @throws coding_exception
+ * @throws dml_exception
+ */
 function block_hubcourselist_render_subjectselect() {
     global $DB;
     $subjects = $DB->get_records('block_hubcourse_subjects', [], 'name ASC');
@@ -28,6 +62,11 @@ function block_hubcourselist_render_subjectselect() {
     return $html;
 }
 
+/**
+ * Return HTML of input form of keyword
+ * @return string
+ * @throws coding_exception
+ */
 function block_hubcourselist_render_keywordinput() {
     $html = html_writer::start_div('input-group');
     $html .= html_writer::span(html_writer::tag('i', '', ['class' => 'fa fa-search']), 'input-group-addon');
@@ -40,6 +79,10 @@ function block_hubcourselist_render_keywordinput() {
     return $html;
 }
 
+/**
+ * Return HTML string of default pagination
+ * @return string
+ */
 function block_hubcourselist_render_pagination() {
     $html = html_writer::start_div('pagination', ['id' => 'block_hubcourselist_pagination']);
     $html .= html_writer::start_tag('ul');
@@ -61,6 +104,12 @@ function block_hubcourselist_render_pagination() {
     return $html;
 }
 
+/**
+ * Return HTML string of block contents
+ * @return string
+ * @throws coding_exception
+ * @throws dml_exception
+ */
 function block_hubcourselist_render() {
     $table = new html_table();
     $table->attributes['class'] = 'hubcourselist table table-hover table-striped';
