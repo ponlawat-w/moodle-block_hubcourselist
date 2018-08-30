@@ -28,9 +28,8 @@ require(['jquery'], function ($) {
         var $body = $('body');
         var isfrontpage = $body.hasClass('pagelayout-frontpage');
         if (isfrontpage) {
-            var $wholecontent = boost ? $('aside[data-block="hubcourselist"]') : $('div.block.block_hubcourselist');
-            console.log($wholecontent);
-            var $target = boost ? $('section#region-main .card.card-block').find('div[role="main"]') : $('div[role="main"]');
+            var $wholecontent = boost ? $('[data-block="hubcourselist"]') : $('div.block.block_hubcourselist');
+            var $target = boost ? $('section#region-main').find('div[role="main"]') : $('div[role="main"]');
             $target.prepend($wholecontent);
             var otherblocks = $('aside.block[data-block!="hubcourselist"]').length;
             if (!otherblocks) {

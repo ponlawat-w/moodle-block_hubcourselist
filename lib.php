@@ -30,13 +30,13 @@
  */
 function block_hubcourselist_render_amountselect($set = [5, 10, 25, 50, 100]) {
     $html = html_writer::start_div('input-group');
-    $html .= html_writer::span(get_string('amountselect_prepend', 'block_hubcourselist'), 'input-group-addon');
+    $html .= html_writer::span(get_string('amountselect_prepend', 'block_hubcourselist'), 'input-group-addon input-group-text input-group-prepend');
     $html .= html_writer::start_tag('select', ['id' => 'block_hubcourselist_amountselect', 'class' => 'form-control']);
     foreach ($set as $value) {
         $html .= html_writer::tag('option', $value, ['value' => $value]);
     }
     $html .= html_writer::end_tag('select');
-    $html .= html_writer::span(get_string('amountselect_append', 'block_hubcourselist'), 'input-group-addon');
+    $html .= html_writer::span(get_string('amountselect_append', 'block_hubcourselist'), 'input-group-addon input-group-text input-group-append');
     $html .= html_writer::end_div();
 
     return $html;
@@ -69,11 +69,11 @@ function block_hubcourselist_render_subjectselect() {
  */
 function block_hubcourselist_render_keywordinput() {
     $html = html_writer::start_div('input-group');
-    $html .= html_writer::span(html_writer::tag('i', '', ['class' => 'fa fa-search']), 'input-group-addon');
+    $html .= html_writer::span(html_writer::tag('i', '', ['class' => 'fa fa-search']), 'input-group-addon input-group-text input-group-prepend');
     $html .= html_writer::start_tag('input', ['type' => 'text', 'id' => 'block_hubcourselist_keywordinput', 'class' => 'form-control', 'placeholder' => get_string('search', 'block_hubcourselist')]);
     $html .= html_writer::div(
             html_writer::tag('button', html_writer::tag('i', '', ['class' => 'fa fa-times']), ['class' => 'btn btn-default', 'title' => get_string('clear')])
-        , 'input-group-btn', ['id' => 'block_hubcourselist_clearkeywordbtn']);
+        , 'input-group-btn input-group-append', ['id' => 'block_hubcourselist_clearkeywordbtn']);
     $html .= html_writer::end_div();
 
     return $html;
@@ -85,7 +85,7 @@ function block_hubcourselist_render_keywordinput() {
  */
 function block_hubcourselist_render_pagination() {
     $html = html_writer::start_div('pagination', ['id' => 'block_hubcourselist_pagination']);
-    $html .= html_writer::start_tag('ul');
+    $html .= html_writer::start_tag('ul', ['class' => 'pagination']);
     $html .= html_writer::tag('li',
             html_writer::tag('a', html_writer::tag('i', '', ['class' => 'fa fa-angle-double-left']), ['href' => 'javascript:void(0);', 'class' => 'page-link']),
             ['class' => 'page-item page-first']);
