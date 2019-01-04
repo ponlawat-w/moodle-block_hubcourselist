@@ -40,3 +40,10 @@ $string['loading'] = 'Loading…';
 
 $string['status'] = 'Showing {$a->start} to {$a->end} of {$a->total} entries';
 $string['noresult'] = 'No result to display';
+
+$string['settings:frontpageposition'] = 'Position in Front Page';
+$string['settings:frontpageposition_description'] = 'Block position to be rendered in front page (site home)';
+$string['settings:fronpageposition_default'] = 'Default';
+$string['settings:fronpageposition_center_append'] = 'Move to center (append to bottom)';
+$string['settings:fronpageposition_center_prepend'] = 'Move to center (prepend to top)';
+$string['settings:fronpageposition_center_dominate'] = 'Move to center (dominate, remove all other contents)';

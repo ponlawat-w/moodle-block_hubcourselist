@@ -43,7 +43,7 @@ class block_hubcourselist extends block_base {
      * @return bool
      */
     public function has_config() {
-        return false;
+        return true;
     }
 
     /**
@@ -73,6 +73,7 @@ class block_hubcourselist extends block_base {
     public function get_content() {
         $this->page->requires->jquery();
         $this->page->requires->string_for_js('loading', 'block_hubcourselist');
+        $this->page->requires->js(new moodle_url('/blocks/hubcourselist/blocksettingsjs.php'));
         $this->page->requires->js(new moodle_url('/blocks/hubcourselist/script.js'));
         $this->page->requires->css(new moodle_url('/blocks/hubcourselist/style.css'));
 

@@ -25,12 +25,27 @@ require(['jquery'], function ($) {
     $(document).ready(function () {
         var boost = M.cfg.theme === 'boost';
 
+        var frontpageposition = block_hubcourselist_settings.frontpageposition;
+
         var $body = $('body');
         var isfrontpage = $body.hasClass('pagelayout-frontpage');
-        if (isfrontpage) {
+        if (isfrontpage && frontpageposition !== 'default') {
             var $wholecontent = boost ? $('[data-block="hubcourselist"]') : $('div.block.block_hubcourselist');
-            var $target = boost ? $('section#region-main').find('div[role="main"]') : $('div[role="main"]');
-            $target.prepend($wholecontent);
+            var $target = boost ? $('#region-main').find('div[role="main"]') : $('#region-main');
+
+            switch (frontpageposition) {
+                case 'center_append':
+                    $target.append($wholecontent);
+                    break;
+                case 'center_prepend':
+                    $target.prepend($wholecontent);
+                    break;
+                case 'center_dominate':
+                    $target.empty();
+                    $target.append($wholecontent);
+                    break;
+            }
+
             var otherblocks = $('aside.block[data-block!="hubcourselist"]').length;
             if (!otherblocks) {
                 $('section#region-main').removeClass('has-blocks');

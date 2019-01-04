@@ -15,18 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version file
- *
- *  Dependency: block_hubcourseinfo
- *
- * @package block_hubcourselist
- * @copyright 2018 Moodle Association of Japan
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+* Transfer block settings to js
+*
+* @package block_hubcourselist
+* @copyright 2018 Moodle Association of Japan
+* @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
 
-$plugin->component = 'block_hubcourselist';
-$plugin->version = 2019010402;
-$plugin->requires = 2017051504;
-$plugin->dependencies = array(
-    'block_hubcourseinfo' => 2018070500
-);
+require_once(__DIR__ . '/../../config.php');
+header('Content-Type: text/javascript');
+
+$data = json_encode([
+    'frontpageposition' => get_config('block_hubcourselist', 'frontpageposition')
+]);
+
+echo "const block_hubcourselist_settings = {$data};";
