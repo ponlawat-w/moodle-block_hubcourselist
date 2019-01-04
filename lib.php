@@ -140,9 +140,10 @@ function block_hubcourselist_render() {
     $html .= html_writer::end_div();
     $html .= html_writer::end_div();
 
-    $html .= html_writer::start_div('row', ['id' => 'block_hubcourelist_statusbar']);
+    $html .= html_writer::start_div('row', ['id' => 'block_hubcourselist_statusbar']);
     $html .= html_writer::div('', 'col-sm-6 col-md-4', ['id' => 'block_hubcourselist_status']);
     $html .= html_writer::div(block_hubcourselist_render_pagination(), 'col-sm-6 col-md-8', ['style' => 'text-align: center;']);
+    $html .= html_writer::end_div();
 
     $html .= html_writer::end_div();
 

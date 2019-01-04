@@ -48,7 +48,7 @@ require(['jquery'], function ($) {
 
         if (!boost) {
             $('#block_hubcourselist_keywords').removeClass('row');
-            $('#block_hubcourelist_statusbar').removeClass('row');
+            $('#block_hubcourselist_statusbar').removeClass('row');
             $('#block_hubcourselist_amountselect_container').addClass('hcl-inline');
             $('#block_hubcourselist_subjectselect_container').addClass('hcl-inline');
             $('#block_hubcourselist_keywordinput_container').addClass('hcl-inline');
