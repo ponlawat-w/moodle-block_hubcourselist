@@ -52,6 +52,7 @@ require(['jquery'], function ($) {
             }
         }
 
+        var $block = $('#block_hubcourselist');
         var $spinner = $('#block_hubcourselist_spinner');
         var $amountselect = $('#block_hubcourselist_amountselect');
         var $subjectselect = $('#block_hubcourselist_subjectselect');
@@ -60,6 +61,7 @@ require(['jquery'], function ($) {
         var $table = $('#block_hubcourselist_table');
         var $status = $('#block_hubcourselist_status');
         var $pagination = $('#block_hubcourselist_pagination');
+        var initialized = false;
 
         if (!boost) {
             $('#block_hubcourselist_keywords').removeClass('row');
@@ -174,6 +176,22 @@ require(['jquery'], function ($) {
                 $table.find('thead th[data-sortby="' + querydataservice.sortby + '"]').addClass('bg-primary')
                     .append(' ')
                     .append($('<i>').addClass(querydataservice.asc ? 'fa fa-arrow-down' : 'fa fa-arrow-up'));
+
+                if (!$block.length) {
+                    $block = $('#block_hubcourselist');
+                }
+                if (!$block.length) {
+                    $block = $('.block_hubcourselist');
+                }
+                if (!$block.length) {
+                    $block = $('.hubcourselist');
+                }
+
+                if (initialized && $block.length) {
+                    $block[0].scrollIntoView();
+                    window.scrollBy(0, -90);
+                }
+                initialized = true;
 
                 $.ajax(M.cfg.wwwroot + '/blocks/hubcourselist/api.php?' + querydataservice.create(), {
                     method: 'GET',
