@@ -56,8 +56,15 @@ $sorttype = strtoupper($sorttype);
 
 $nameformat = trim(get_string('fullnamedisplay'));
 $nameformat = substr($nameformat, strpos($nameformat, '{'));
-$nameformatsql = (strpos($nameformat, '{$a->lastname}') === 0) ?
-    'CONCAT({user}.lastname, " ", {user}.firstname)' : 'CONCAT({user}.firstname, " ", {user}.lastname)';
+
+$nameformatsql = '';
+if ($DB->get_dbfamily() == 'postgres') {
+    $nameformatsql = (strpos($nameformat, '{$a->lastname}') === 0) ?
+        'CONCAT({user}.lastname, \' \', {user}.firstname)' : 'CONCAT({user}.firstname, \' \', {user}.lastname)';
+} else {
+    $nameformatsql = (strpos($nameformat, '{$a->lastname}') === 0) ?
+        'CONCAT({user}.lastname, " ", {user}.firstname)' : 'CONCAT({user}.firstname, " ", {user}.lastname)';
+}
 
 $sql_select = '
     SELECT
@@ -120,7 +127,13 @@ if ($subject) {
 $sql_orderby = " ORDER BY {$sortby} {$sorttype}";
 
 $limit_begin = ($page - 1) * $maxresult;
-$sql_limit = " LIMIT {$limit_begin}, {$maxresult}";
+
+$sql_limit = '';
+if ($DB->get_dbfamily() == 'postgres') {
+    $sql_limit = " LIMIT {$maxresult} OFFSET {$limit_begin}";
+} else {
+    $sql_limit = " LIMIT {$limit_begin}, {$maxresult}";
+}
 
 $records = $DB->get_record_sql('SELECT COUNT(*) AS amount ' . $sql_from_join . $sql_condition, $params);
 $pages = ceil($records->amount / $maxresult);
