@@ -23,17 +23,38 @@
  */
 
 /**
+ * Get page amount set
+ * @return int[]
+ */
+function block_hubcourselist_amountset($keyvalue = false) {
+    return $keyvalue ? [
+        5 => 5,
+        10 => 10,
+        25 => 25,
+        50 => 50,
+        100 => 100
+    ] : [5, 10, 25, 50, 100];
+}
+
+/**
  * Return rendered dropdown HTML string of given numbers
- * @param int[] $set
  * @return string
  * @throws coding_exception
  */
-function block_hubcourselist_render_amountselect($set = [5, 10, 25, 50, 100]) {
+function block_hubcourselist_render_amountselect() {
+    $set = block_hubcourselist_amountset(false);
+    $defaultvalue = get_config('block_hubcourselist', 'defaultitemperpage');
+
     $html = html_writer::start_div('input-group');
     $html .= html_writer::span(get_string('amountselect_prepend', 'block_hubcourselist'), 'input-group-addon input-group-text input-group-prepend');
     $html .= html_writer::start_tag('select', ['id' => 'block_hubcourselist_amountselect', 'class' => 'form-control']);
     foreach ($set as $value) {
-        $html .= html_writer::tag('option', $value, ['value' => $value]);
+        $attr = ['value' => $value];
+        if ($value == $defaultvalue) {
+            $attr['selected'] = 'selected';
+        }
+
+        $html .= html_writer::tag('option', $value, $attr);
     }
     $html .= html_writer::end_tag('select');
     $html .= html_writer::span(get_string('amountselect_append', 'block_hubcourselist'), 'input-group-addon input-group-text input-group-append');

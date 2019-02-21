@@ -25,6 +25,9 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
+
+    require_once(__DIR__ . '/lib.php');
+
     $settings->add(
         new admin_setting_configselect(
             'block_hubcourselist/frontpageposition',
@@ -32,11 +35,22 @@ if ($ADMIN->fulltree) {
             get_string('settings:frontpageposition_description', 'block_hubcourselist'),
             'default',
             [
-                'default' => get_string('settings:fronpageposition_default', 'block_hubcourselist'),
-                'center_append' => get_string('settings:fronpageposition_center_append', 'block_hubcourselist'),
-                'center_prepend' => get_string('settings:fronpageposition_center_prepend', 'block_hubcourselist'),
-                'center_dominate' => get_string('settings:fronpageposition_center_dominate', 'block_hubcourselist')
+                'default' => get_string('settings:frontpageposition_default', 'block_hubcourselist'),
+                'center_append' => get_string('settings:frontpageposition_center_append', 'block_hubcourselist'),
+                'center_prepend' => get_string('settings:frontpageposition_center_prepend', 'block_hubcourselist'),
+                'center_dominate' => get_string('settings:frontpageposition_center_dominate', 'block_hubcourselist')
             ]
         )
     );
+
+    $settings->add(
+        new admin_setting_configselect(
+            'block_hubcourselist/defaultitemperpage',
+            get_string('settings:defaultitemperpage', 'block_hubcourselist'),
+            get_string('settings:defaultitemperpage_description', 'block_hubcourselist'),
+            block_hubcourselist_amountset(false)[0],
+            block_hubcourselist_amountset(true)
+        )
+    );
+
 }

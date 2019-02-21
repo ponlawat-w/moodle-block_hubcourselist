@@ -43,7 +43,9 @@ $string['noresult'] = 'No result to display';
 
 $string['settings:frontpageposition'] = 'Position in Front Page';
 $string['settings:frontpageposition_description'] = 'Block position to be rendered in front page (site home)';
-$string['settings:fronpageposition_default'] = 'Default';
-$string['settings:fronpageposition_center_append'] = 'Move to center (append to bottom)';
-$string['settings:fronpageposition_center_prepend'] = 'Move to center (prepend to top)';
-$string['settings:fronpageposition_center_dominate'] = 'Move to center (dominate, remove all other contents)';
+$string['settings:frontpageposition_default'] = 'Default';
+$string['settings:frontpageposition_center_append'] = 'Move to center (append to bottom)';
+$string['settings:frontpageposition_center_prepend'] = 'Move to center (prepend to top)';
+$string['settings:frontpageposition_center_dominate'] = 'Move to center (dominate, remove all other contents)';
+$string['settings:defaultitemperpage'] = 'Default Item per Page';
+$string['settings:defaultitemperpage_description'] = 'Default number of item to be displayed per page';

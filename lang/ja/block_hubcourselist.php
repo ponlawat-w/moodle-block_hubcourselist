@@ -43,7 +43,9 @@ $string['noresult'] = '結果がありません。';
 
 $string['settings:frontpageposition'] = 'サイトホームによるブロック位置';
 $string['settings:frontpageposition_description'] = 'サイトホームでブロックがどこで表示されるか設定する。';
-$string['settings:fronpageposition_default'] = 'ディフォルト';
-$string['settings:fronpageposition_center_append'] = '中カラムの下に移動';
-$string['settings:fronpageposition_center_prepend'] = '中カラムの上に移動';
-$string['settings:fronpageposition_center_dominate'] = '中カラムを代置';
+$string['settings:frontpageposition_default'] = 'ディフォルト';
+$string['settings:frontpageposition_center_append'] = '中カラムの下に移動';
+$string['settings:frontpageposition_center_prepend'] = '中カラムの上に移動';
+$string['settings:frontpageposition_center_dominate'] = '中カラムを代置';
+$string['settings:defaultitemperpage'] = 'ページのデフォルト結果数';
+$string['settings:defaultitemperpage_description'] = '1ページにデフォルトの結果の数';
